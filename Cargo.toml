@@ -1,0 +1,19 @@
+[package]
+name = "actix-mongo-api"
+version = "0.1.0"
+authors = ["demola malomo <malomo.alaba@yahoo.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4.4.0"
+serde = { version = "1.0.193", features = ["derive"] }
+dotenv = "0.15.0"
+futures = "0.3.29"
+chrono = {version="0.4.31" , features = ["serde"]}
+
+[dependencies.mongodb]
+version = "2.7.1"
+default-features = false
+features = ["async-std-runtime"]
