@@ -1,0 +1,6 @@
+version: '3'
+services:
+  my-rust-app:
+    build: .
+    volumes:
+      - ./docker_target:/usr/src/myapp/target
