@@ -2,11 +2,11 @@ mod api;
 mod models;
 mod repository;
 
-use actix_web::{web::Data, web, App, HttpServer, HttpResponse, Responder, get, post};
+use actix_web::{web::Data, web, App, HttpServer, HttpResponse, Responder, get, post, middleware::Logger};
 use api::user_api::{create_user, delete_user, get_all_users, get_user, update_user};
 use api::ipn_api::{create_ipn, get_ipn, update_ipn, delete_ipn};
 use repository::mongodb_repo::MongoRepo;
-
+use env_logger::Env;
 
 // #[actix_web::main]
 // async fn main() -> std::io::Result<()> {
@@ -24,8 +24,10 @@ use repository::mongodb_repo::MongoRepo;
 async fn main() -> std::io::Result<()> {
     let db = MongoRepo::init().await;
     let db_data = Data::new(db);
+    env_logger::init_from_env(Env::default().default_filter_or("info"));
     HttpServer::new(move || {
         App::new()
+            .wrap(Logger::default())
             .app_data(db_data.clone())
             .service(create_user)
             .service(get_user)
